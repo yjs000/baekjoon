@@ -10,21 +10,21 @@
 // 표를 만들어서 규칙을 찾아봄
 
 function countBag(N) {
-    let bag5 = 0; let bag3 = 0;
-
-    bag5 = parseInt(N / 5);
-    if(N % 5 == 0){
-        return bag5;
-    } else {
-        while(bag5 != 0){
-            i = 0;
-            if((N - (3 * i)) % 5 == 0){
-                bag3 = i;
-                bag5 = bag5 - i;
-                return bag3 + bag5
-            }
-        }
+    let res = 0;
+    function count(N){
+        if(N < 0){
+            return -1;
+        } else if(N % 5 == 0){
+            // console.log("n%5", N, res)
+            return res += parseInt(N / 5);
+        } else {
+            // console.log("-3", N, res)
+            N -= 3;
+            res = res + 1;
+        } 
+        return count(N);
     }
+    return count(N);
 }
 
 function print(){
