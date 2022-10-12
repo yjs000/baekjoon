@@ -2,33 +2,34 @@
 //필요한 동전의 최솟값
 
 //맞는 것 같은데 왜 틀렸다지..
-const readline = require("readline");
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./in/11047";
+let input = require("fs").readFileSync(filePath).toString().split("\n");
 
-let input = [];
-rl.on("line", function (line) {
-    input.push(line)
-}).on("close", function () {
-    console.log(solution(input));
-    process.exit();
-});
+console.log(solution(input));
 
 function solution(input){
-    let total = input.splice(0, 1)[0].split(" ")[1];
-    const coins = input.splice(1, input.length).reverse();
+    const [first, ...second] = input;
+    
+    let total = parseInt(first.split(" ")[1]);
+    const coins = second.reverse().map(val => parseInt(val));
     
     let count = 0;
-    coins.forEach((coin) => {
-        coin = Number(coin);
-        total = Number(total);
-        while (coin <= total) {
-            total = total - coin;
-            count++;
+
+    for(const coin of coins){
+        if(total === 0){
+            break;
         }
-    });
+        if(coin <= total){
+            count += parseInt(total/coin);
+            total = total % coin;
+        }
+    }
+    // coins.forEach((coin) => {
+    //     while (coin <= total) {
+    //         total = total - coin;
+    //         count++;
+    //     }
+    // });
 
     return count;
 }
