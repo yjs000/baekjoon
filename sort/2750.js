@@ -14,4 +14,4 @@ function solution(input) {
     }
 
     return res.sort((a, b) => a - b);
-} //test2
+} //test3
