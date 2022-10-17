@@ -1,7 +1,6 @@
 //동전 N개의 합은 K
 //필요한 동전의 최솟값
 
-//맞는 것 같은데 왜 틀렸다지..
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./in/11047";
 let input = require("fs").readFileSync(filePath).toString().split("\n");
 
