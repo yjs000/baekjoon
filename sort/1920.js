@@ -1,0 +1,24 @@
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./in/1920";
+let input = require("fs").readFileSync(filePath).toString().trim().split("\n");
+
+const res = solution(input);
+res.forEach((val) => console.log(val));
+
+//일일이 찾으면 시간초과 => 이분탐색
+function solution(input) {
+    const [_, second, __, last] = input;
+    const res = [];
+    const arr = second
+        .split(" ")
+        .map((val) => Number(val))
+        .sort((a, b) => a - b);
+    const target = last.split(" ").map((val) => Number(val));
+    target.forEach((t) => binarySearch(arr, t) ? res.push(1) : 0);
+    return res;
+}
+
+//구현
+function binarySearch(arr, target) {
+    const idx = parseInt(arr.length / 2);
+    if(target < arr[idx]){}
+}
