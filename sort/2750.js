@@ -1,17 +1,10 @@
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./in/2750";
-let input = require("fs").readFileSync(filePath).toString().split("\n");
+let input = require("fs").readFileSync(filePath).toString().trim().split("\n");
 
-console.log(solution(input));
+const res = solution(input);
+res.forEach(val => console.log(val));
 
-//틀렷다고..
 function solution(input) {
-    const val = input.map((str) => Number(str));
-    const set = new Set();
-    const res = [];
-    val.forEach((item) => set.add(item));
-    for (const item of set) {
-        res.push(item);
-    }
-
-    return res.sort((a, b) => a - b);
-}//
+    const [_, ...val] = input.map((str) => Number(str));
+    return val.sort((a, b) => a - b);
+}
