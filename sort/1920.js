@@ -1,45 +1,29 @@
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./in/1920";
 let input = require("fs").readFileSync(filePath).toString().trim().split("\n");
 
-const res = solution(input);
-res.forEach((val) => console.log(val));
-
-//일일이 찾으면 시간초과 => 이분탐색
-function solution(input) {
-    const [_, second, __, last] = input;
-    const res = [];
-    const arr = second
-        .split(" ")
-        .map((val) => Number(val))
-        .sort((a, b) => a - b);
-    const target = last.split(" ").map((val) => Number(val));
-    target.forEach((t) => {
-        binarySearch(arr, t);
-        const result = binarySearch(arr, t);
-        if(result) {
-            res.push(1)
-        } else {
-            res.push(0)
-        }
-    });
-    return res;
-}
-
-//구현 //시간초과..???
-function binarySearch(arr, target) {
-    let res = false
+const binarySearch = (arr, target) => {
     let left = 0;
-    let right = arr.length;
+    let right = arr.length - 1;
     while(right >= left) {
         const idx = parseInt((left + right) / 2);
         if (target == arr[idx]) {
-            res = true;
-            break;
+            return 1
         } else if (target > arr[idx]) {
             left = idx + 1; 
         } else if (target < arr[idx]) {
             right = idx - 1;
         } 
     }
-    return res;
+    return 0;
 }
+// binarySearch사용해도오류 => input은 바로 접근
+// const [_, second, __, last] = input
+const arr = input[1]
+    .split(" ")
+    .map(Number)
+    .sort((a, b) => a - b);
+const target = input[3].split(" ").map(Number);
+
+//foreach보다 map으로 도니까 훨씬 시간 단축
+const res = target.map(t => binarySearch(arr, t));
+console.log(res.join("\n"));
