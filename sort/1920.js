@@ -13,25 +13,33 @@ function solution(input) {
         .map((val) => Number(val))
         .sort((a, b) => a - b);
     const target = last.split(" ").map((val) => Number(val));
-    target.forEach((t) => (binarySearch(arr, t) ? res.push(1) : res.push(0)));
+    target.forEach((t) => {
+        binarySearch(arr, t);
+        const result = binarySearch(arr, t);
+        if(result) {
+            res.push(1)
+        } else {
+            res.push(0)
+        }
+    });
     return res;
 }
 
-//구현
+//구현 //시간초과..???
 function binarySearch(arr, target) {
-    console.log("binarySearch")
     let res = false
     let left = 0;
     let right = arr.length;
-    const idx = parseInt((left + right) / 2);
-    while(left < idx && idx < right) {
-        console.log(left, right, idx) //0, 5, 2 무한루프
+    while(right >= left) {
+        const idx = parseInt((left + right) / 2);
         if (target == arr[idx]) {
             res = true;
+            break;
         } else if (target > arr[idx]) {
-            left = idx;
+            left = idx + 1; 
         } else if (target < arr[idx]) {
-            right = idx;
-        }       
+            right = idx - 1;
+        } 
     }
+    return res;
 }
